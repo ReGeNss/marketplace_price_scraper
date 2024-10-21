@@ -1,5 +1,5 @@
 import {Browser} from "puppeteer-core"
-import {Scraper} from "../scraper"
+import {Scraper} from "./scraper"
 
 export class SilpoScraper extends Scraper{
     private siteUrl = 'https://silpo.ua/category/energetychni-napoi-59';

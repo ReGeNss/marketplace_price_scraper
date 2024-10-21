@@ -5,7 +5,7 @@ import {ForaScraper} from "./scrapers/fora_scraper";
 import {SilpoScraper} from "./scrapers/silpo_scraper";
 import {TrashScraper} from "./scrapers/trash_scraper";
 
-export class ScraperHandler{
+export class ScrapingService {
     private createBrowser:() => Promise<Browser> = async () => {
         return await puppeteer.launch({
             headless: true,
@@ -13,7 +13,7 @@ export class ScraperHandler{
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\Chrome.exe',
         })
     }
-    scrapData: () => Promise<void> =async () => {
+    scrapData: () => Promise<Product[]> =async () => {
         const productArray: Product[] = [];
         const browser = await this.createBrowser();
         const atbScraper = new ATBScraper();
@@ -24,7 +24,7 @@ export class ScraperHandler{
         productArray.push(...await foraScraper.scrap(browser));
         productArray.push(...await silpoScraper.scrap(browser));
         productArray.push(... await trashScraper.scrap(browser));
-        console.log(productArray);
+        return productArray;
     }
 
 }

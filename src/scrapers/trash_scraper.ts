@@ -1,5 +1,5 @@
 import {Browser} from "puppeteer-core"
-import {Scraper} from "../scraper"
+import {Scraper} from "./scraper"
 
 export class TrashScraper extends Scraper{
     private siteUrl = 'https://thrash.ua/promotions';

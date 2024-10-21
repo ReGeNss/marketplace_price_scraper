@@ -1,5 +1,5 @@
 import {Browser} from "puppeteer-core"
-import {Scraper} from "../scraper"
+import {Scraper} from "./scraper"
 
 export class ForaScraper extends Scraper{
     private siteUrl = 'https://fora.ua/category/energetychni-napoi-2486';

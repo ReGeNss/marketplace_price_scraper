@@ -1,5 +1,5 @@
 import {Browser} from "puppeteer-core"
-import {Scraper} from "../scraper"
+import {Scraper} from "./scraper"
 
 export class ATBScraper extends Scraper{
     private marketplace = "ATB";
