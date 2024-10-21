@@ -4,6 +4,7 @@ interface Data {
 }
 
 interface Brand {
+    name: string,
     products: Product[];
 }
 

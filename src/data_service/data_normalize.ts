@@ -1,15 +1,19 @@
 const keyWords  = [
     'напій',
+    'Нaпій',
     'безалкогольний',
     'енергетичний',
     'газований',
+    'гaзoвaний',
     'ж/б',
+    'eнepгeтичний',
+    'та',
     'сильногазований',
     'ПЕТ',
     'з/б',
     'середньогазований',
 ]
-const productDataNormalizeAndTrim = (products: Product[]) => {
+const productDataNormalize = (products: Product[]) => {
     const regex = new RegExp(keyWords.join("|"), "gi");
     for(let product of products){
         product.title = product.title.normalize("NFC").replace(regex, '').trim();
@@ -18,4 +22,4 @@ const productDataNormalizeAndTrim = (products: Product[]) => {
     return products;
 };
 
-module.exports = productDataNormalizeAndTrim;
+module.exports = {productDataNormalize};
