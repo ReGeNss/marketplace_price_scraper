@@ -23,7 +23,8 @@ export class ScrapingService {
         productArray.push(...await atbScraper.scrap(browser));
         productArray.push(...await foraScraper.scrap(browser));
         productArray.push(...await silpoScraper.scrap(browser));
-        productArray.push(... await trashScraper.scrap(browser));
+        // productArray.push(... await trashScraper.scrap(browser));
+        console.log("amount of products: ", productArray.length);
         return productArray;
     }
 

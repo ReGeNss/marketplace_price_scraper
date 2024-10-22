@@ -44,13 +44,13 @@ export class SilpoScraper extends Scraper{
 
                 let imgElement = e.querySelector('.product-card__top-inner') as HTMLElement;
                 let imgSrc = (imgElement?.firstChild as HTMLElement)?.getAttribute('src');
-
+                // addProduct(products,{marketplace,title ,currentPrice, oldPrice,imgSrc, volume: null});
                 products.push({marketplace,title ,currentPrice, oldPrice,imgSrc, volume: null});
             }
             return products;
         },marketplace);
         await page.close();
-        return parsedData;
+        return this.filterDublicateProducts(parsedData);
     }
 
 }

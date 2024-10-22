@@ -32,7 +32,7 @@ export class ATBScraper extends Scraper{
             return products;
         }, marketplace);
         await page.close();
-        return parsedData;
+        return this.filterDublicateProducts(parsedData);
     }
 
 }

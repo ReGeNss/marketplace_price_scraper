@@ -33,6 +33,6 @@ export class TrashScraper extends Scraper{
             return products;
         },marketplace);
         await page.close();
-        return parsedData;
+        return this.filterDublicateProducts(parsedData);
     }
 }
