@@ -14,5 +14,5 @@ interface Product {
     currentPrice: string,
     oldPrice: string | null,
     imgSrc: string | null,
-    volume: number | null;
+    volume: string | null;
 }

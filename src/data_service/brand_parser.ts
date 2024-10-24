@@ -67,49 +67,76 @@
 //     return specificatedBrands;
 // }
 
-const brandParser = (products: Product[]) => {
-    let brands: Brand[] = [];
+    const brandParser = (products: Product[]) => {
+        let brands: Brand[] = [];
+        console.log('brandParser' + products.length);
+        let otherProducts: Product[] = [];
+        let c = 0;
+        for(let product of products){
+            let splitedTitle = product.title.split(' ');
+            // console.log('splitedTitle'+ splitedTitle);
+            let productIndex = products.indexOf(product);
+            products.splice(productIndex, 1);
+            let brandName = "";
+            for(let word of splitedTitle ){
+                let brandsProducts: Product[] = [];
+                if (word.includes("зі") ||
+                    word.includes("смаком")
+                ) continue;
 
-    for(let product of products){
-        let splitedTitle = product.title.split(' ');
-        let productIndex = products.indexOf(product);
-        products.splice(productIndex, 1);
-        let brandName = "";
-        for(let word of splitedTitle ){
-            let brandsProducts: Product[] = [];
-            if (word.includes("мл") ||
-                word.includes("л") ||
-                word.includes("500") ||
-                word.includes("250") ||
-                word.includes("0.5") ||
-                word.includes("0,5") ||
-                word.includes("зі") ||
-                word.includes("смаком") ||
-                word.includes("1л")
-            ) continue;
 
-            products.forEach(e=> {
-                // console.log(word.toLowerCase().trim());
-                // console.log(word.toLowerCase() === e.title.toLowerCase().split(' ')[0])
-                if(e.title.toLowerCase().trim().includes(word.toLowerCase().trim())){
-                    brandsProducts.push(...(products.splice(products.indexOf(e),1)));
+
+                products.forEach(e=> {
+                    // console.log(word.toLowerCase().trim());
+                    // console.log(word.toLowerCase() === e.title.toLowerCase().split(' ')[0])
+                    if(e.title.toLowerCase().trim().includes(word.toLowerCase().trim())){
+                        brandsProducts.push(...(products.splice(products.indexOf(e),1)));
+                    }
+                })
+                if(brandsProducts.length >= 3){
+                    brandName = brandName + ' ' + word;
+                    // if(brandName.trim() == '' ){
+                    //     brands.push({name: product.title, products: brandsProducts});
+                    //     console.log('brandName ERR '+ brandName);
+                    //     break;
+                    // }
+                    brandsProducts.push(product);
+                    console.log("Products now " +products.length);
+                    console.log("brand now: "+brandsProducts.length);
+                    brands.push({name: brandName.trim(), products: brandsProducts});
+                    break;
+                }else{
+                    otherProducts.push(...brandsProducts);
                 }
-            })
-            if(brandsProducts.length >= 3){
-                brandName = brandName + ' ' + word;
-                brands.push({name: brandName.trim(), products: brandsProducts});
-                break;
+
             }
+            console.log('brandParserFIN' + products.length);
 
         }
+        if(products.length > 0){
+            // otherProductSpecificate(products, brands);
+            brands.push({name: "other", products: [...products]});
+        }
+        console.log(brands);
+        specificateBrands(brands);
+    }
 
+const otherProductSpecificate = (products: Product[], brands: Brand[]) => {
+    console.log('otherProductSpecificate' + products.length);
+    for(let product of products){
+        let splitedTitle = product.title.toLowerCase().split(' ');
+        for(let brand of brands){
+            if(brand.name.toLowerCase().includes(splitedTitle[0])){
+                brand.products.push(product);
+                console.log('OTHER' + brand.name);
+
+            }
+        }
     }
-    if(products.length > 0){
-        brands.push({name: "other", products: products});
-    }
-    // console.log(brands);
-    specificateBrands(brands);
+    // console.log('otherProductSpecificateFINAL' + products.length);
+    return brands;
 }
+
 const specificateBrands = (brands: Brand[]) => {
     let specificatedBrands: Brand[] = [];
     let count = 0;
@@ -132,7 +159,6 @@ const specificateBrands = (brands: Brand[]) => {
             })
             if (specificatedBrands.find(e => e.name.toLowerCase() === brand.name.toLowerCase()) == undefined) {
                 specificatedBrands.push(brand);
-                console.log(brand.name);
             }
         })
     }
@@ -145,13 +171,5 @@ const specificateBrands = (brands: Brand[]) => {
     console.log(count2);
 }
 
-// const productsAllay = (firstProducts: Product[], secondProducts) => {
-//     firstProducts.forEach(product => {
-//         secondProducts.forEach(e => {
-//             if(){
-//                 console.log(e.title);
-//             }
-//     })
-// }
 
 module.exports = {brandParser};
