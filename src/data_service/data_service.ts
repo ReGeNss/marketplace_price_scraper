@@ -3,10 +3,18 @@ import {brandParser} from './brand_parser';
 import {volumeParser} from './volume_parser';
 
 export class DataService{
-    filterAndTransformData(data: Product[]){
+    private filterAndTransformData(data: Product[], scrapedMarketplaces: string[]){
         const normalizedProducts = productDataNormalize(data);
         const products = volumeParser(normalizedProducts);
-        console.log(products.length);
-        brandParser(products);
+        const brands = brandParser(products);
+        const marketplacesData = {
+            brands: brands,
+            marketplaces: scrapedMarketplaces
+        }
+        return marketplacesData;
     };
+    getFormattedDataJson = (data: Product[], scrapedMarketplaces: string[]) => {
+        let filteredData = this.filterAndTransformData(data, scrapedMarketplaces);
+        return JSON.stringify(filteredData);
+    }
 }

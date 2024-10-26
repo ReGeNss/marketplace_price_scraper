@@ -6,7 +6,9 @@ const dataService = new DataService();
 let scrapedData:Product[] =[];
 const startProssecing =(async () => {
     scrapedData = await scraper.scrapData();
-    dataService.filterAndTransformData(scrapedData);
+    let dataJson = dataService.getFormattedDataJson(scrapedData, ['ATB','Фора','Сільпо','Траш']);
+    console.log(dataJson);
+    return dataJson;
 });
 try {
     startProssecing();
