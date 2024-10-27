@@ -2,9 +2,9 @@
         let brands: Brand[] = [];
         console.log('brandParser' + products.length);
         let otherProducts: Product[] = [];
-        let c = 0;
         for(let product of products){
             let splitedTitle = product.title.split(' ');
+            splitedTitle.splice(2, splitedTitle.length-2);
             // console.log('splitedTitle'+ splitedTitle);
             let productIndex = products.indexOf(product);
             // products.splice(productIndex, 1);
@@ -16,21 +16,24 @@
                 ) continue;
                 products.forEach(e=> {
                     // console.log(word.toLowerCase().trim());
-                    // console.log(word.toLowerCase() === e.title.toLowerCase().split(' ')[0])
+                    // console.log(word.toLowerCase() ===
                     if(e.title.toLowerCase().trim().includes(word.toLowerCase().trim())){
                         brandsProducts.push(...(products.splice(products.indexOf(e),1)));
                     }
                 })
                 if(brandsProducts.length >= 3){
                     brandName = brandName + ' ' + word;
+                    // console.log("word "+word + product.title);
+                    // console.log('brandName' + brandName);
                     // if(brandName.trim() == '' ){
                     //     brands.push({name: product.title, products: brandsProducts});
                     //     console.log('brandName ERR '+ brandName);
                     //     break;
                     // }
                     // brandsProducts.push(product);
-                    console.log("Products now " +products.length);
-                    console.log("brand now: "+brandsProducts.length);
+                    if(brandName.trim().length <= 2 )  continue;
+                    // console.log("Products now " +products.length);
+                    // console.log("brand now: "+brandsProducts.length);
                     brands.push({name: brandName.trim(), products: brandsProducts});
                     break;
                 }else{
@@ -38,7 +41,7 @@
                 }
 
             }
-            console.log('brandParserFIN' + products.length);
+            // console.log('brandParserFIN' + products.length);
 
         }
         if(products.length > 0){
@@ -47,8 +50,9 @@
             brands.push({name: "other", products: otherProductFiltered});
         }
         let specificatedBrands = brandsDublicateDelete(brands);
-        let formatedBrands = otherProductSpecificate(specificatedBrands);
-        return extendBrandsName(formatedBrands);
+        let extendedBrands = extendBrandsName(specificatedBrands);
+        let formatedBrands = otherProductSpecificate(extendedBrands);
+        return formatedBrands;
 }
 
 const extendBrandsName = (brands: Brand[]) => {
@@ -56,15 +60,14 @@ const extendBrandsName = (brands: Brand[]) => {
     let otherProducts = brands.splice(indexOfOther, 1);
     for(let brand of brands){
         let products = brand.products;
-        let extendetName = "";
-        let splitedProductName = brand.name.split(' ');
+        let extendedName = "";
+        let splitedProductName = brand.products[0].title.split(' ');
         for(let part of splitedProductName){
-            console.log(products.some(e => e.title.toLowerCase().includes(part.toLowerCase().trim() )));
-            if(products.some(e => e.title.toLowerCase().includes(part.toLowerCase().trim()))){
-                extendetName = extendetName + ' ' + part;
+            if(products.every(e => e.title.toLowerCase().includes(part.toLowerCase().trim()))){
+                extendedName = extendedName + ' ' + part;
             }
         }
-        brand.name = extendetName.trim();
+        brand.name = extendedName.trim();
     }
     brands.push(...otherProducts);
     console.log('extendBrandsName ');
@@ -87,24 +90,24 @@ const otherProductDuplicateRemove = (products: Product[]) => {
             fitleredProducts.push(product);
         }
     }
-    console.log('otherProductDuplicate');
+    // console.log('otherProductDuplicate');
     console.log(fitleredProducts);
     return fitleredProducts;
 }
 const otherProductSpecificate = (brands: Brand[]) => {
-    let otherProducts = brands.find(e => e.name === "other")?.products;
-    if(otherProducts == undefined) return brands;
+    let otherProductsValide = brands.find(e => e.name === "other")?.products;
+    if(otherProductsValide == undefined) return brands;
+    let otherProducts = [...otherProductsValide];
     for(let product of otherProducts){
         let splitedTitle = product.title.toLowerCase().split(' ');
         for(let brand of brands){
             if(brand.name.toLowerCase().includes(splitedTitle[0])){
-                otherProducts.splice(otherProducts.indexOf(product), 1);
+                otherProductsValide.splice(otherProductsValide.indexOf(product), 1);
                 brand.products.push(product);
-                console.log('OTHER' + brand.name);
+                break;
             }
         }
     }
-    console.log('otherProductSpecificate!!!!!!!!');
     console.log(brands);
     return brands;
 }
@@ -135,12 +138,12 @@ const brandsDublicateDelete = (brands: Brand[]) => {
         })
     }
 
-    console.log(specificatedBrands);
+    // console.log(specificatedBrands);
     let count2 = 0;
-    specificatedBrands.forEach(e => {
-        count2 += e.products.length;
-    })
-    console.log(count2);
+    // specificatedBrands.forEach(e => {
+    //     count2 += e.products.length;
+    // })
+    // console.log(count2);
     return specificatedBrands;
 }
 

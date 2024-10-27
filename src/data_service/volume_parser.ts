@@ -68,6 +68,14 @@ const volumeParser = (products: Product[]) => {
                 product.title = product.title.replace("750", "").trim();
                 product.volume = "750 мл";
                 break;
+            case title.includes("355"):
+                product.title = product.title.replace("355", "").trim();
+                product.volume = "355 мл";
+                break;
+            case title.includes("473"):
+                product.title = product.title.replace("473", "").trim();
+                product.volume = "473 мл";
+                break;
         }
     }
     for(let product of products){
