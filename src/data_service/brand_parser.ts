@@ -10,6 +10,8 @@
             // products.splice(productIndex, 1);
             let brandName = "";
             for(let word of splitedTitle ){
+                word  =word.trim();
+                // if(word.toLowerCase() === 'energy' ) continue;
                 let brandsProducts: Product[] = [];
                 if (word.includes("зі") ||
                     word.includes("смаком")
@@ -23,8 +25,8 @@
                 })
                 if(brandsProducts.length >= 3){
                     brandName = brandName + ' ' + word;
-                    // console.log("word "+word + product.title);
-                    // console.log('brandName' + brandName);
+                    console.log("word "+word + product.title);
+                    console.log('brandName' + brandName);
                     // if(brandName.trim() == '' ){
                     //     brands.push({name: product.title, products: brandsProducts});
                     //     console.log('brandName ERR '+ brandName);
@@ -49,6 +51,7 @@
             let otherProductFiltered = otherProductDuplicateRemove([...products,...otherProducts]);
             brands.push({name: "other", products: otherProductFiltered});
         }
+        console.log(brands);
         let specificatedBrands = brandsDublicateDelete(brands);
         let extendedBrands = extendBrandsName(specificatedBrands);
         let formatedBrands = otherProductSpecificate(extendedBrands);
@@ -67,7 +70,9 @@ const extendBrandsName = (brands: Brand[]) => {
                 extendedName = extendedName + ' ' + part;
             }
         }
-        brand.name = extendedName.trim();
+        if(extendedName != ''){
+            brand.name = extendedName.trim();
+        }
     }
     brands.push(...otherProducts);
     console.log('extendBrandsName ');

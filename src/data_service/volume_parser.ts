@@ -3,8 +3,9 @@ const volumeParser = (products: Product[]) => {
         let title = product.title.toLowerCase();
         if(title.includes("мл")){
             product.title = product.title.replace("мл", "").trim();
-        }else if(title.includes("л")){
-            product.title = product.title.replace("л", "").trim();
+        }
+        else if(title.match(/(^|[^а-яА-Я])л([^а-яА-Я]|$)/i)){
+            product.title = product.title.replace(/(^|[^а-яА-Я])л([^а-яА-Я]|$)/i, "").trim();
         }
     }
     for(let product of products){
