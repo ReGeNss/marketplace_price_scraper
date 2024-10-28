@@ -41,7 +41,8 @@
         finalizedBrands.forEach(e => {
             count += e.products.length;
         })
-        console.log('brandParser OUT' + count);
+        console.log('brandParser OUT' + count)
+        console.log(finalizedBrands);
         return finalizedBrands;
 }
 

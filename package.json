@@ -9,7 +9,7 @@
   "dependencies": {
     "i": "^0.3.7",
     "npm": "^10.9.0",
-    "puppeteer-core": "^23.6.0"
+    "puppeteer-core": "^23.6.1"
   },
   "devDependencies": {
     "typescript": "^5.5.3"
