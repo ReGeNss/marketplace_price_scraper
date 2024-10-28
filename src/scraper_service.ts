@@ -8,7 +8,7 @@ import {TrashScraper} from "./scrapers/trash_scraper";
 export class ScrapingService {
     private createBrowser:() => Promise<Browser> = async () => {
         return await puppeteer.launch({
-            headless: true,
+            headless: false,
             args: ['--window-size=1920,1080','--no-sandbox', '--disable-setuid-sandbox','--disable-setuid-sandbox'],
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\Chrome.exe',
         })

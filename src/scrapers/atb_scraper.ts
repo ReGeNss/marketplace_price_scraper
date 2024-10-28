@@ -10,6 +10,7 @@ export class ATBScraper extends Scraper{
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36');
         await page.goto(this.siteUrl)
         const marketplace = this.marketplace;
+        await this.wait(3000);
         const parsedData:Product[]  = await page.evaluate((marketplace: string) => {
             const products:Product[] =[];
             let elements = document.querySelectorAll('.catalog-item');
